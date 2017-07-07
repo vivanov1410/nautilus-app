@@ -5,11 +5,13 @@ import Toolbar from './app/components/Toolbar'
 import ImageGallery from './app/components/ImageGallery'
 import Button from './app/components/Button'
 
+import { shuffle } from './app/utils'
+
 const styles = StyleSheet.create({
   root: {
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'space-between',
+    // justifyContent: 'space-between',
     backgroundColor: '#ffffff',
   },
   footer: {
@@ -39,7 +41,17 @@ class App extends Component {
     fetch('http://jsonplaceholder.typicode.com/photos')
       .then(response => response.json())
       .then((json) => {
-        // const data = json.map((x, i) => ({ ...x, url: `https://source.unsplash.com/random/${i+500}x${i+500}` }))
+        // let width = 200
+        // let height = 200
+        // const data = json.map((x) => {
+        //   width += 1
+        //   if (width === 400) {
+        //     width = 200
+        //     height += 1
+        //   }
+        //
+        //   return { ...x, url: `https://source.unsplash.com/random/${width}x${height}` }
+        // })
         const data = json
         this.setState({
           data,
@@ -50,22 +62,6 @@ class App extends Component {
   }
 
   randomize() {
-    const shuffle = (arr) => {
-      const tmp = [...arr]
-      const result = []
-      const inner = () => {
-        if (tmp.length === 0) return result
-        const randomIndex = Math.floor(Math.random() * tmp.length)
-        result.push(tmp[randomIndex])
-        tmp.splice(randomIndex, 1)
-
-        return inner()
-      }
-      inner()
-
-      return result
-    }
-
     const { data, dataSource } = this.state
     const shuffledData = shuffle(data)
     this.setState({
