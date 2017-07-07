@@ -17,8 +17,6 @@ const styles = StyleSheet.create({
   },
   list: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   scroll: {
     justifyContent: 'center',
@@ -63,7 +61,7 @@ class ImageGallery extends Component {
   //   const event = e.nativeEvent
   // }
 
-  renderScrollComponent = () => (
+  renderScrollComponent = props => (
     <ScrollView
       contentContainerStyle={styles.scroll}
       horizontal
@@ -72,6 +70,7 @@ class ImageGallery extends Component {
       directionalLockEnabled
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}
+      {...props}
     />
   )
 

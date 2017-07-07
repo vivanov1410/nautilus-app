@@ -41,18 +41,18 @@ class App extends Component {
     fetch('http://jsonplaceholder.typicode.com/photos')
       .then(response => response.json())
       .then((json) => {
-        // let width = 200
-        // let height = 200
-        // const data = json.map((x) => {
-        //   width += 1
-        //   if (width === 400) {
-        //     width = 200
-        //     height += 1
-        //   }
-        //
-        //   return { ...x, url: `https://source.unsplash.com/random/${width}x${height}` }
-        // })
-        const data = json
+        let width = 200
+        let height = 200
+        const data = json.map((x) => {
+          width += 1
+          if (width === 400) {
+            width = 200
+            height += 1
+          }
+
+          return { ...x, url: `https://source.unsplash.com/random/${width}x${height}` }
+        })
+        // const data = json
         this.setState({
           data,
           dataSource: this.state.dataSource.cloneWithRows(data),
