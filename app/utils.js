@@ -14,4 +14,11 @@ export const shuffle = (arr) => {
   return result
 }
 
+export const calculateDiagonalAngle = (width, height) => {
+  const rad = Math.asin(width / Math.sqrt((width * width) + (height * height)))
+  const deg = 90 - ((rad * 180) / Math.PI)
+
+  return deg
+}
+
 export default {}

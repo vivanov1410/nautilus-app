@@ -6,7 +6,10 @@ import {
   ScrollView,
   StyleSheet,
   Dimensions,
+  Text,
 } from 'react-native'
+
+import { calculateDiagonalAngle } from '../utils'
 
 const styles = StyleSheet.create({
   root: {
@@ -44,15 +47,42 @@ class ImageGallery extends Component {
   }
 
   handleRenderRow = (image) => {
-    console.log(image)
     const { width, height } = this.props
+    const deg = calculateDiagonalAngle(image.width, image.height)
+    const containerStyle = {
+      width,
+      height,
+      paddingLeft: 5,
+      paddingRight: 5,
+    }
+    const imageStyle = {
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: width - 10,
+      height,
+      borderColor: 'rgba(34, 192, 252, 0.4)',
+      borderWidth: 2,
+      borderRadius: 7,
+    }
+    const titleStyle = {
+      transform: [{ rotate: `${deg}deg` }],
+      color: '#FFFFFF',
+      fontSize: 20,
+      fontWeight: 'bold',
+      fontFamily: 'Roboto',
+    }
 
     return (
-      <Image
-        style={{ width, height }}
-        source={{ uri: image.url }}
-        resizeMode="contain"
-      />
+      <View style={containerStyle}>
+        <Image
+          style={imageStyle}
+          source={{ uri: image.url }}
+          resizeMode="cover"
+          borderRadius={5}
+        >
+          <Text style={titleStyle}>{image.title}</Text>
+        </Image>
+      </View>
     )
   }
 
@@ -101,7 +131,8 @@ ImageGallery.propTypes = {
 ImageGallery.defaultProps = {
   initialIndex: 0,
   width: Dimensions.get('window').width,
-  height: Dimensions.get('window').height,
+  // height: Dimensions.get('window').height,
+  height: 400,
 }
 
 export default ImageGallery

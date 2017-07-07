@@ -50,7 +50,12 @@ class App extends Component {
             height += 1
           }
 
-          return { ...x, url: `https://source.unsplash.com/random/${width}x${height}` }
+          return {
+            ...x,
+            url: `https://source.unsplash.com/random/${width}x${height}`,
+            width,
+            height,
+          }
         })
         // const data = json
         this.setState({
