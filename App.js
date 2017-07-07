@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, StatusBar, ListView } from 'react-native'
+import { StyleSheet, View, StatusBar, ListView } from 'react-native'
 
 import Toolbar from './app/components/Toolbar'
 import ImageGallery from './app/components/ImageGallery'
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 30,
     marginBottom: 30,
-  }
+  },
 })
 
 class App extends Component {
@@ -38,7 +38,7 @@ class App extends Component {
   fetchData() {
     fetch('http://jsonplaceholder.typicode.com/photos')
       .then(response => response.json())
-      .then(json => {
+      .then((json) => {
         // const data = json.map((x, i) => ({ ...x, url: `https://source.unsplash.com/random/${i+500}x${i+500}` }))
         const data = json
         this.setState({
@@ -50,11 +50,11 @@ class App extends Component {
   }
 
   randomize() {
-    const shuffle  = (arr) => {
-    	const tmp = [...arr]
+    const shuffle = (arr) => {
+      const tmp = [...arr]
       const result = []
       const inner = () => {
-        if(tmp.length === 0) return result
+        if (tmp.length === 0) return result
         const randomIndex = Math.floor(Math.random() * tmp.length)
         result.push(tmp[randomIndex])
         tmp.splice(randomIndex, 1)
@@ -70,7 +70,7 @@ class App extends Component {
     const shuffledData = shuffle(data)
     this.setState({
       data: shuffledData,
-      dataSource: dataSource.cloneWithRows(shuffledData)
+      dataSource: dataSource.cloneWithRows(shuffledData),
     })
   }
 

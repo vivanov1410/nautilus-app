@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 
 const styles = StyleSheet.create({
@@ -13,15 +13,17 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     fontFamily: 'Roboto',
     fontSize: 20,
-  }
+  },
 })
 
-const Toolbar = ({ title }) => {
-  return (
-    <View style={styles.root}>
-      <Text style={styles.title}>{title}</Text>
-    </View>
-  )
+const Toolbar = ({ title }) => (
+  <View style={styles.root}>
+    <Text style={styles.title}>{title}</Text>
+  </View>
+)
+
+Toolbar.propTypes = {
+  title: PropTypes.string.isRequired,
 }
 
 export default Toolbar

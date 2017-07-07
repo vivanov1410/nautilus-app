@@ -1,4 +1,4 @@
-import React, { PropTypes, Component } from 'react';
+import React, { PropTypes, Component } from 'react'
 import {
   View,
   Image,
@@ -6,7 +6,6 @@ import {
   ScrollView,
   StyleSheet,
   Dimensions,
-  Platform,
 } from 'react-native'
 
 const styles = StyleSheet.create({
@@ -20,28 +19,9 @@ const styles = StyleSheet.create({
 })
 
 class ImageGallery extends Component {
-  static propTypes = {
-    dataSource: PropTypes.instanceOf(ListView.DataSource).isRequired,
-    initialIndex: PropTypes.number,
-    renderScrollComponent: PropTypes.func,
-    style: View.propTypes.style,
-    imageStyle: View.propTypes.style,
-    width: PropTypes.number,
-    height: PropTypes.number,
-  }
-
-  static defaultProps = {
-    initialIndex: 0,
-    renderScrollComponent: (props) => <ScrollView {...props} />,
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
-  };
-
   constructor(props) {
     super(props)
-    this.handleScroll = this.handleScroll.bind(this)
-    this.renderScrollComponent = this.renderScrollComponent.bind(this)
-    this._refListView = null
+    this.refListView = null
   }
 
   componentDidMount() {
@@ -52,58 +32,73 @@ class ImageGallery extends Component {
     this.refresh()
   }
 
+  refresh() {
+    const { initialIndex, width } = this.props
+    this.refListView.scrollTo({ x: initialIndex * width, animated: false })
+  }
+
   handleRenderRow = (image) => {
     const { width, height, imageStyle } = this.props
-    let imageHeight = height
+    const imageHeight = height
 
     return (
       <Image
         style={[imageStyle, { width, height: imageHeight }]}
-        source={{uri: image.url}}
+        source={{ uri: image.url }}
         resizeMode="contain"
       />
     )
   }
 
-  refresh() {
-    const { initialIndex, width } = this.props
-    this._refListView.scrollTo({ x: initialIndex * width, animated: false })
-  }
+  // handleScroll (e) {
+  //   // TODO: do something here
+  //   const event = e.nativeEvent
+  // }
 
-  handleScroll(e) {
-    // TODO: do something herex
-    const event = e.nativeEvent
-  }
-
-  renderScrollComponent(props) {
-    return React.cloneElement(
-      this.props.renderScrollComponent(props),
-      {
-        horizontal: true,
-        pagingEnabled: true,
-        maximumZoomScale: 3.0,
-        directionalLockEnabled: true,
-        showsVerticalScrollIndicator: false,
-        showsHorizontalScrollIndicator: false,
-        ...props,
-      })
-  }
+  renderScrollComponent = props => (
+    <ScrollView
+      horizontal
+      pagingEnabled
+      maximumZoomScale={3.0}
+      directionalLockEnabled
+      showsVerticalScrollIndicator={false}
+      showsHorizontalScrollIndicator={false}
+      {...props}
+    />
+  )
 
   render() {
     return (
       <View style={[styles.root, this.props.style]}>
         <ListView
           renderScrollComponent={this.renderScrollComponent}
-          onScroll={this.handleScroll}
+          // onScroll={this.handleScroll}
           dataSource={this.props.dataSource}
           style={styles.listView}
           renderRow={this.handleRenderRow}
-          ref={comp => { this._refListView = comp; return; }}
+          ref={comp => (this.refListView = comp)}
           enableEmptySections
         />
       </View>
     )
   }
+}
+
+ImageGallery.propTypes = {
+  dataSource: PropTypes.instanceOf(ListView.DataSource).isRequired,
+  initialIndex: PropTypes.number,
+  style: View.propTypes.style,
+  imageStyle: View.propTypes.style,
+  width: PropTypes.number,
+  height: PropTypes.number,
+}
+
+ImageGallery.defaultProps = {
+  initialIndex: 0,
+  width: Dimensions.get('window').width,
+  height: Dimensions.get('window').height,
+  style: [],
+  imageStyle: [],
 }
 
 export default ImageGallery
