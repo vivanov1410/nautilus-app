@@ -1,0 +1,12 @@
+{
+  "expo": {
+    "sdkVersion": "18.0.0",
+    "name": "Nautilus",
+    "orientation": "portrait",
+    "primaryColor": "#22C0FC",
+    "androidStatusBarColor": "#1EACE2",
+    "androidStatusBar": {
+      "backgroundColor": "#1EACE2"
+    }
+  },
+}
