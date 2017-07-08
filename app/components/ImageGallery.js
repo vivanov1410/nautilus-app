@@ -49,7 +49,7 @@ class ImageGallery extends Component {
 
   handleRenderRow = (image) => {
     const { width, height } = this.props
-    const deg = calculateDiagonalAngle(image.width, image.height)
+    const angle = calculateDiagonalAngle(width, height)
     const padding = 5
     const containerStyle = {
       width,
@@ -68,7 +68,7 @@ class ImageGallery extends Component {
       elevation: 3,
     }
     const titleStyle = {
-      transform: [{ rotate: `${deg}deg` }],
+      transform: [{ rotate: `${angle}deg` }],
       color: '#FFFFFF',
       fontSize: 20,
       fontWeight: 'bold',
