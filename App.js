@@ -5,14 +5,15 @@ import Toolbar from './app/components/Toolbar'
 import ImageGallery from './app/components/ImageGallery'
 import Button from './app/components/Button'
 
-import { shuffle } from './app/utils'
+import { shuffle, prettifyImages } from './app/utils'
+import theme from './app/theme'
+import config from './app/config'
 
 const styles = StyleSheet.create({
   root: {
     flex: 1,
     flexDirection: 'column',
-    // justifyContent: 'space-between',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#FFFFFF',
   },
   footer: {
     justifyContent: 'center',
@@ -38,26 +39,10 @@ class App extends Component {
   }
 
   fetchData() {
-    fetch('http://jsonplaceholder.typicode.com/photos')
+    fetch(config.images.url)
       .then(response => response.json())
       .then((json) => {
-        let width = 200
-        let height = 200
-        const data = json.map((x) => {
-          width += 1
-          if (width === 400) {
-            width = 200
-            height += 1
-          }
-
-          return {
-            ...x,
-            url: `https://source.unsplash.com/random/${width}x${height}`,
-            width,
-            height,
-          }
-        })
-        // const data = json
+        const data = prettifyImages(json)
         this.setState({
           data,
           dataSource: this.state.dataSource.cloneWithRows(data),
@@ -66,7 +51,7 @@ class App extends Component {
       .done()
   }
 
-  randomize() {
+  handleButtonClick = () => {
     const { data, dataSource } = this.state
     const shuffledData = shuffle(data)
     this.setState({
@@ -78,11 +63,11 @@ class App extends Component {
   render() {
     return (
       <View style={styles.root}>
-        <StatusBar backgroundColor="#1EACE2" />
+        <StatusBar backgroundColor={theme.colors.statusBar} />
         <Toolbar title="Nautilus" />
         <ImageGallery dataSource={this.state.dataSource} />
         <View style={styles.footer}>
-          <Button title="Surprise me" onPress={() => this.randomize()} />
+          <Button title="Surprise me" onPress={this.handleButtonClick} />
         </View>
       </View>
     )

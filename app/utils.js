@@ -21,4 +21,29 @@ export const calculateDiagonalAngle = (width, height) => {
   return deg
 }
 
+export const prettifyImages = (data) => {
+  const MIN_WIDTH = 200
+  const MIN_HEIGHT = 200
+  const MAX_WIDTH = 400
+
+  let width = MIN_WIDTH
+  let height = MIN_HEIGHT
+  const images = data.map((x) => {
+    width += 1
+    if (width === MAX_WIDTH) {
+      height += 1
+      width = MIN_WIDTH
+    }
+
+    return {
+      ...x,
+      url: `https://source.unsplash.com/random/${width}x${height}`,
+      width,
+      height,
+    }
+  })
+
+  return images
+}
+
 export default {}

@@ -1,17 +1,19 @@
 import React, { PropTypes } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 
+import theme from '../theme'
+
 const styles = StyleSheet.create({
   root: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     height: 56,
-    backgroundColor: '#22c0fc',
+    backgroundColor: theme.colors.primary,
   },
   title: {
-    color: '#ffffff',
-    fontFamily: 'Roboto',
+    color: '#FFFFFF',
+    fontFamily: theme.fontFamily,
     fontSize: 20,
   },
 })

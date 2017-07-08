@@ -10,6 +10,7 @@ import {
 } from 'react-native'
 
 import { calculateDiagonalAngle } from '../utils'
+import theme from '../theme'
 
 const styles = StyleSheet.create({
   root: {
@@ -49,27 +50,29 @@ class ImageGallery extends Component {
   handleRenderRow = (image) => {
     const { width, height } = this.props
     const deg = calculateDiagonalAngle(image.width, image.height)
+    const padding = 5
     const containerStyle = {
       width,
       height,
-      paddingLeft: 5,
-      paddingRight: 5,
+      paddingLeft: padding,
+      paddingRight: padding,
     }
     const imageStyle = {
       justifyContent: 'center',
       alignItems: 'center',
-      width: width - 10,
+      width: width - (padding * 2),
       height,
       borderColor: 'rgba(34, 192, 252, 0.4)',
       borderWidth: 2,
       borderRadius: 7,
+      elevation: 3,
     }
     const titleStyle = {
       transform: [{ rotate: `${deg}deg` }],
       color: '#FFFFFF',
       fontSize: 20,
       fontWeight: 'bold',
-      fontFamily: 'Roboto',
+      fontFamily: theme.fontFamily,
     }
 
     return (
@@ -85,11 +88,6 @@ class ImageGallery extends Component {
       </View>
     )
   }
-
-  // handleScroll (e) {
-  //   // TODO: do something here
-  //   const event = e.nativeEvent
-  // }
 
   renderScrollComponent = props => (
     <ScrollView
@@ -109,7 +107,6 @@ class ImageGallery extends Component {
       <View style={styles.root}>
         <ListView
           renderScrollComponent={this.renderScrollComponent}
-          // onScroll={this.handleScroll}
           dataSource={this.props.dataSource}
           style={styles.list}
           renderRow={this.handleRenderRow}
@@ -131,7 +128,6 @@ ImageGallery.propTypes = {
 ImageGallery.defaultProps = {
   initialIndex: 0,
   width: Dimensions.get('window').width,
-  // height: Dimensions.get('window').height,
   height: 400,
 }
 

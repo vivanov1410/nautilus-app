@@ -1,29 +1,30 @@
 import React, { PropTypes } from 'react'
 import { View, Text, StyleSheet, TouchableHighlight } from 'react-native'
 
+import theme from '../theme'
+
 const styles = StyleSheet.create({
   root: {
     justifyContent: 'center',
     alignItems: 'center',
     height: 48,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#FFFFFF',
     borderWidth: 2,
-    borderColor: '#22c0fc',
+    borderColor: theme.colors.primary,
     borderRadius: 100,
   },
   title: {
     paddingLeft: 40,
     paddingRight: 40,
-    color: '#22c0fc',
-    fontFamily: 'Roboto',
+    color: theme.colors.primary,
+    fontFamily: theme.fontFamily,
     fontSize: 14,
   },
 })
 
 const Button = ({ title, onPress }) => (
   <TouchableHighlight
-    underlayColor="#ffffff"
-    activeOpacity={0.7}
+    underlayColor="#FFFFFF"
     onPress={onPress}
   >
     <View style={styles.root}>
